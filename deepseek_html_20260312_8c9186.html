@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>✨ Prophets · Journey of Light</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            outline: none; /* Remove all outlines on mobile */
+        }
+
+        :root {
+            --primary: #0f3b2a;
+            --primary-light: #1e5f44;
+            --secondary: #daa353;
+            --secondary-dark: #b8822b;
+            --gold: #bf9345;
+            --cream: #fdf8ed;
+            --glass: rgba(253, 248, 237, 0.95);
+            --text-dark: #1f300d;
+            --text-light: #fef9e6;
+            --success: #4caf50;
+            --error: #f44336;
+            --shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        body {
+            background: radial-gradient(circle at 10% 20%, #1f704c, #0a2f1f);
+            min-height: 100vh;
+            min-height: -webkit-fill-available;
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px;
+            color: var(--text-dark);
+            position: relative;
+        }
+
+        /* Remove all focus outlines */
+        button:focus, div:focus, .btn:focus, .option-btn:focus {
+            outline: none !important;
+            box-shadow: none !important;
+        }
+
+        /* Elegant animated background - using Unicode characters that display properly */
+        body::before {
+            content: "★ ☾ ✦";
+            position: absolute;
+            top: 5%;
+            left: 5%;
+            font-size: 3rem;
+            opacity: 0.1;
+            animation: float 8s infinite ease-in-out;
+            white-space: nowrap;
+            pointer-events: none;
+            font-family: 'Arial', sans-serif; /* Ensure emoji display */
+        }
+
+        body::after {
+            content: "✦ ☾ ★";
+            position: absolute;
+            bottom: 5%;
+            right: 5%;
+            font-size: 3rem;
+            opacity: 0.1;
+            animation: float 10s infinite ease-in-out reverse;
+            pointer-events: none;
+            font-family: 'Arial', sans-serif; /* Ensure emoji display */
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        /* Main container - perfect glass morphism */
+        .game-container {
+            width: 100%;
+            max-width: 480px;
+            height: 90vh;
+            max-height: 800px;
+            background: var(--glass);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 48px;
+            box-shadow: var(--shadow), inset 0 0 0 2px var(--gold);
+            padding: 24px 20px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        /* Content wrapper */
+        .content-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        /* Fixed header at top */
+        .fixed-header {
+            flex-shrink: 0;
+            width: 100%;
+            margin-bottom: 15px;
+        }
+
+        /* Header - elegant and consistent */
+        .header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(135deg, #ecdbaa, #e0c78c);
+            padding: 10px 18px;
+            border-radius: 60px;
+            border: 2px solid var(--gold);
+            box-shadow: 0 4px 0 #8f6e32;
+            width: 100%;
+        }
+
+        .welcome-tag {
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: #1f4a1a;
+            background: rgba(255, 255, 255, 0.3);
+            padding: 6px 16px;
+            border-radius: 40px;
+            border: 1px solid #b88d4b;
+            max-width: 170px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .score-box {
+            font-weight: 800;
+            color: #4a3715;
+            background: #fef7d2;
+            padding: 6px 16px;
+            border-radius: 40px;
+            border: 2px solid #d4a259;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 1.1rem;
+        }
+
+        /* Scrollable area - only when needed */
+        .scroll-area {
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding-right: 5px;
+            scrollbar-width: thin;
+            scrollbar-color: var(--gold) var(--cream);
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .scroll-area::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .scroll-area::-webkit-scrollbar-track {
+            background: var(--cream);
+            border-radius: 10px;
+        }
+
+        .scroll-area::-webkit-scrollbar-thumb {
+            background: var(--gold);
+            border-radius: 10px;
+        }
+
+        /* No scroll sections */
+        .no-scroll {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            overflow: visible;
+        }
+
+        /* Cards */
+        .level-card {
+            background: linear-gradient(145deg, #ffffff, #f9f0da);
+            margin-bottom: 14px;
+            padding: 14px 18px;
+            border-radius: 70px;
+            border: 2px solid #c28d35;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            box-shadow: 0 6px 0 #946f32;
+            cursor: pointer;
+            transition: transform 0.1s ease;
+        }
+
+        .level-card:active {
+            transform: translateY(4px);
+            box-shadow: 0 2px 0 #946f32;
+        }
+
+        .level-card.locked {
+            opacity: 0.6;
+            filter: grayscale(1);
+            background: #d9d9d9;
+            border-color: #8a8a8a;
+            box-shadow: 0 6px 0 #6b6b6b;
+            pointer-events: none;
+        }
+
+        .level-card.completed {
+            background: linear-gradient(145deg, #d4edda, #c3e6cb);
+            border-color: #2f8f3a;
+            box-shadow: 0 6px 0 #1f692a;
+        }
+
+        .level-number {
+            width: 42px;
+            height: 42px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.3rem;
+            border: 3px solid var(--gold);
+        }
+
+        .level-info {
+            flex: 1;
+        }
+
+        .level-name {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--text-dark);
+        }
+
+        .level-status {
+            font-size: 0.75rem;
+            opacity: 0.7;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Buttons */
+        .btn {
+            cursor: pointer;
+            border: none;
+            font-family: inherit;
+            transition: all 0.1s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-weight: 600;
+            background: none;
+        }
+
+        .btn-primary {
+            background: var(--secondary);
+            color: #1f300d;
+            padding: 14px 24px;
+            border-radius: 60px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            border: 3px solid #ffdf9c;
+            box-shadow: 0 7px 0 #9e6b28;
+            width: fit-content;
+            min-width: 160px;
+            margin: 10px auto;
+        }
+
+        .btn-primary:active {
+            transform: translateY(5px);
+            box-shadow: 0 2px 0 #9e6b28;
+        }
+
+        .btn-back {
+            background: #9c834c;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            border: 2px solid #5f4a27;
+            box-shadow: 0 4px 0 #4f3c20;
+        }
+
+        .btn-back:active {
+            transform: translateY(3px);
+            box-shadow: 0 1px 0 #4f3c20;
+        }
+
+        .btn-hint {
+            background: #b45f2b;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            border: 2px solid #ffcd94;
+            box-shadow: 0 4px 0 #7a401e;
+            gap: 5px;
+        }
+
+        .btn-hint:active {
+            transform: translateY(3px);
+            box-shadow: 0 1px 0 #7a401e;
+        }
+
+        .btn-next {
+            background: var(--secondary);
+            color: #1f300d;
+            padding: 12px 30px;
+            border-radius: 60px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            border: 3px solid #ffdf9c;
+            box-shadow: 0 6px 0 #9e6b28;
+            width: 100%;
+            margin-top: 15px;
+        }
+
+        .btn-next:active {
+            transform: translateY(4px);
+            box-shadow: 0 2px 0 #9e6b28;
+        }
+
+        .btn-next.hidden {
+            display: none;
+        }
+
+        /* Story panel - large text area */
+        .story-panel {
+            background: linear-gradient(145deg, #fbefcf, #f5e2bc);
+            border-radius: 40px;
+            border: 4px solid #c89b4a;
+            padding: 24px 20px;
+            box-shadow: 0 12px 0 #966d30;
+            margin: 10px 0 15px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 200px;
+        }
+
+        .prophet-title {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #175522;
+            background: #f8eac2;
+            display: inline-block;
+            padding: 8px 28px;
+            border-radius: 70px;
+            border: 3px solid #eba031;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 0 #a57129;
+            align-self: flex-start;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .story-text {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: #1a3f1a;
+            background: #fffdf2;
+            padding: 22px 20px;
+            border-radius: 32px;
+            border: 2px dashed #b57c2a;
+            overflow-y: auto;
+            flex: 1;
+            scrollbar-width: thin;
+        }
+
+        .story-text::-webkit-scrollbar {
+            width: 4px;
+        }
+        .story-text::-webkit-scrollbar-thumb {
+            background: var(--gold);
+            border-radius: 10px;
+        }
+
+        /* Quiz elements */
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #eedbaa;
+            border-radius: 60px;
+            padding: 10px 18px;
+            border: 3px solid #af7b36;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 0 #7e5721;
+        }
+
+        .level-badge {
+            background: var(--primary);
+            color: #ffecb3;
+            padding: 6px 22px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            border: 2px solid #f5cd83;
+        }
+
+        .question-text {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin: 20px 0;
+            text-align: center;
+            color: var(--text-dark);
+            font-family: 'Playfair Display', serif;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin: 15px 0;
+        }
+
+        .option-btn {
+            background: white;
+            border: 3px solid #c1812b;
+            border-radius: 60px;
+            padding: 16px 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            box-shadow: 0 5px 0 #8e561a;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.05s;
+            width: 100%;
+        }
+
+        .option-btn:active {
+            transform: translateY(4px);
+            box-shadow: 0 1px 0 #8e561a;
+        }
+
+        .option-btn.correct {
+            background: #b8edb8;
+            border-color: #1e861e;
+            box-shadow: 0 3px 0 #0f5e0f;
+            transform: translateY(2px);
+        }
+
+        .option-btn.wrong {
+            background: #f7c2c2;
+            border-color: #b33131;
+            box-shadow: 0 3px 0 #771c1c;
+            transform: translateY(2px);
+        }
+
+        .option-btn.disabled {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .feedback {
+            background: #fff9e1;
+            border-radius: 60px;
+            padding: 14px 20px;
+            margin: 20px 0 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: 3px solid #f2b042;
+            text-align: center;
+        }
+
+        .points-badge {
+            background: #1f642f;
+            color: #ffe8ae;
+            padding: 8px 24px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            text-align: center;
+            margin: 10px 0;
+            border: 3px solid #f5cd83;
+        }
+
+        /* Welcome screen */
+        .welcome-screen {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            gap: 20px;
+        }
+
+        .welcome-icon {
+            font-size: 5rem;
+            animation: float 4s infinite ease-in-out;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .welcome-title {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--primary);
+            font-family: 'Playfair Display', serif;
+            text-shadow: 2px 2px 0 var(--gold);
+            letter-spacing: -0.5px;
+        }
+
+        .welcome-input {
+            width: 90%;
+            max-width: 320px;
+            padding: 16px 22px;
+            font-size: 1.1rem;
+            border: 3px solid var(--gold);
+            border-radius: 60px;
+            background: white;
+            text-align: center;
+            box-shadow: inset 0 3px 8px #d4b27e, 0 4px 0 #8f6e32;
+        }
+
+        /* Reward page */
+        .reward-page {
+            text-align: center;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .reward-icon {
+            font-size: 5rem;
+            filter: drop-shadow(0 10px 10px #946f3a);
+            font-family: 'Arial', sans-serif;
+        }
+
+        .reward-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #1f5a1f;
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Responsive */
+        @media (max-width: 400px) {
+            .game-container { padding: 18px 14px; }
+            .prophet-title { font-size: 1.7rem; }
+            .story-text { font-size: 1rem; }
+            .options-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container" id="gameContainer">
+        <!-- Dynamic content will be injected -->
+    </div>
+
+    <script>
+        (function() {
+            // ========== COMPLETE PROPHETS DATA (25) ==========
+            const prophets = [
+                { 
+                    name: "Adam (AS)", 
+                    article: "Adam was the first human created by Allah from clay. He lived in Paradise with Hawwa but was sent to Earth after eating from the forbidden tree. He repented and Allah forgave him. He is the father of mankind and the first prophet. He taught his children to worship one God."
+                },
+                { 
+                    name: "Idris (AS)", 
+                    article: "Idris was a prophet known for his wisdom and knowledge. He was truthful and patient. He excelled in astronomy and writing. The Quran describes him as a righteous man and elevated him to a high station. He taught his people to worship Allah alone."
+                },
+                { 
+                    name: "Nuh (AS)", 
+                    article: "Nuh called his people to Allah for 950 years. Only a few believed. He built an ark by Allah's command. A great flood came and drowned the disbelievers. Nuh and the believers were saved. He is known as the second father of humanity."
+                },
+                { 
+                    name: "Hud (AS)", 
+                    article: "Hud was sent to the people of 'Ad. They were powerful but worshipped idols. Hud warned them to worship Allah alone. They rejected him and were destroyed by a fierce wind. The believers were saved. Hud is known for his patience."
+                },
+                { 
+                    name: "Salih (AS)", 
+                    article: "Salih was sent to the Thamud people. They demanded a miracle: a she-camel from rocks. Allah gave them the camel, but most killed it. They were destroyed by an earthquake. Salih and his followers were saved."
+                },
+                { 
+                    name: "Ibrahim (AS)", 
+                    article: "Ibrahim is the friend of Allah. He smashed the idols of his people and was thrown into fire, but Allah made the fire cool. He was tested with the command to sacrifice his son Isma'il, and both submitted. Allah replaced his son with a ram. He built the Kaaba with Isma'il."
+                },
+                { 
+                    name: "Lut (AS)", 
+                    article: "Lut was sent to the people of Sodom. They practiced immoral acts. Lut warned them, but they refused. Angels visited Lut and told him to leave at night. The city was destroyed by a rain of stones. His wife was left behind."
+                },
+                { 
+                    name: "Isma'il (AS)", 
+                    article: "Isma'il was the son of Ibrahim. He was a righteous and patient boy. He helped his father build the Kaaba. He learned Arabic and became a prophet. He taught his family to pray and give charity. He is an ancestor of Prophet Muhammad."
+                },
+                { 
+                    name: "Ishaq (AS)", 
+                    article: "Ishaq was the second son of Ibrahim, born from Sarah. He was a blessed prophet. He lived in Canaan and taught people to worship Allah. His descendants include many prophets like Ya'qub and Yusuf."
+                },
+                { 
+                    name: "Ya'qub (AS)", 
+                    article: "Ya'qub was also called Israel. He was the son of Ishaq. He was patient when his son Yusuf was lost. He wept until he lost his eyesight, but never lost hope in Allah. Eventually he was reunited with Yusuf."
+                },
+                { 
+                    name: "Yusuf (AS)", 
+                    article: "Yusuf was the beloved son of Ya'qub. His brothers threw him in a well. He was sold in Egypt and later imprisoned. He interpreted the king's dream and became a minister. He forgave his brothers and was reunited with his family."
+                },
+                { 
+                    name: "Ayyub (AS)", 
+                    article: "Ayyub was very rich but lost everything. He was tested with severe illness for many years. He remained patient and faithful. He prayed to Allah, and Allah restored his health and wealth, giving him even more."
+                },
+                { 
+                    name: "Shu'ayb (AS)", 
+                    article: "Shu'ayb was sent to the people of Midian. They cheated in weights and measures. He told them to be just and fair. They mocked him and were destroyed by an earthquake. Shu'ayb and the believers were saved."
+                },
+                { 
+                    name: "Musa (AS)", 
+                    article: "Musa spoke directly to Allah. He was saved as a baby from Pharaoh. He fled to Madyan and later returned with miracles. He confronted Pharaoh and led the Israelites out of Egypt. He received the Torah on Mount Sinai."
+                },
+                { 
+                    name: "Harun (AS)", 
+                    article: "Harun was the brother of Musa. He was eloquent and helped Musa deliver the message. He stayed with the Israelites when Musa went to Mount Sinai. He tried to stop them from worshipping the golden calf."
+                },
+                { 
+                    name: "Dawud (AS)", 
+                    article: "Dawud was a king and prophet. He killed Goliath with a sling. Allah gave him the Zabur. He had a beautiful voice, and mountains and birds joined him in praise. He was a just ruler."
+                },
+                { 
+                    name: "Sulayman (AS)", 
+                    article: "Sulayman was the son of Dawud. He could understand the language of birds and animals. He commanded the jinn and the wind. He had a vast kingdom and judged wisely. He invited the Queen of Sheba to submit to Allah."
+                },
+                { 
+                    name: "Ilyas (AS)", 
+                    article: "Ilyas was sent to his people who worshipped Ba'l. He called them to worship Allah alone. They rejected him. He is mentioned in the Quran as a righteous messenger."
+                },
+                { 
+                    name: "Al-Yasa (AS)", 
+                    article: "Al-Yasa succeeded Ilyas. He continued calling people to righteousness among the Children of Israel. The Quran praises him as one of the excellent ones."
+                },
+                { 
+                    name: "Dhul-Kifl (AS)", 
+                    article: "Dhul-Kifl is believed to be a patient and righteous prophet. He was fair in his judgments. The Quran mentions him as one of the steadfast prophets."
+                },
+                { 
+                    name: "Yunus (AS)", 
+                    article: "Yunus was swallowed by a large fish after leaving his people in anger. He repented in the darkness of the fish's belly. Allah forgave him and caused the fish to release him. His people later believed."
+                },
+                { 
+                    name: "Zakariyya (AS)", 
+                    article: "Zakariyya was the guardian of Maryam. He was old and prayed for a son. Allah gave him Yahya. He was a skilled carpenter and steadfast in faith."
+                },
+                { 
+                    name: "Yahya (AS)", 
+                    article: "Yahya was the son of Zakariyya. He was given wisdom as a child. He confirmed the word of Allah. He was ascetic and righteous. He was martyred for speaking the truth."
+                },
+                { 
+                    name: "Isa (AS)", 
+                    article: "Isa was born miraculously to Maryam. He spoke in the cradle. He healed the blind and leper by Allah's permission. He was given the Injil. He was not crucified but raised to Allah. He will return before the Day of Judgment."
+                },
+                { 
+                    name: "Muhammad (PBUH)", 
+                    article: "Muhammad is the final prophet. He was born in Mecca. He received the Quran through Jibril. He taught monotheism and kindness. He faced persecution and migrated to Medina. He united Arabia and is the best example for mankind."
+                }
+            ];
+
+            // Generate 5 questions per prophet (all answers based on article)
+            function generateQuestionsForLevel(level) {
+                const p = prophets[level];
+                const sentences = p.article.split('. ').filter(s => s.trim().length > 0);
+                
+                return [
+                    {
+                        question: "What is the name of this prophet?",
+                        options: [p.name, prophets[(level+3)%25].name, prophets[(level+7)%25].name, prophets[(level+11)%25].name],
+                        correctIndex: 0
+                    },
+                    {
+                        question: "Which statement is true about " + p.name + "?",
+                        options: [
+                            sentences[0] || p.article.substring(0, 50) + "...",
+                            "He was a king in China",
+                            "He lived for 500 years",
+                            "He never existed"
+                        ],
+                        correctIndex: 0
+                    },
+                    {
+                        question: "What happened to " + p.name + "?",
+                        options: [
+                            sentences[1] || sentences[0] || p.article.substring(0, 50) + "...",
+                            "He flew to the sky",
+                            "He became a king",
+                            "He wrote a book"
+                        ],
+                        correctIndex: 0
+                    },
+                    {
+                        question: "Choose the correct fact about " + p.name + ":",
+                        options: [
+                            sentences[2] || sentences[0] || p.article.substring(0, 50) + "...",
+                            "He discovered fire",
+                            "He had 100 children",
+                            "He never prayed"
+                        ],
+                        correctIndex: 0
+                    },
+                    {
+                        question: "Is " + p.name + " mentioned in the Quran?",
+                        options: ["Yes, by name", "No", "Only in Bible", "Only in Torah"],
+                        correctIndex: 0
+                    }
+                ];
+            }
+
+            // ========== GAME STATE ==========
+            let state = {
+                name: localStorage.getItem('prophet_name') || '',
+                score: parseInt(localStorage.getItem('prophet_score')) || 0,
+                attempts: parseInt(localStorage.getItem('prophet_attempts')) || 0,
+                correct: parseInt(localStorage.getItem('prophet_correct')) || 0,
+                incorrect: parseInt(localStorage.getItem('prophet_incorrect')) || 0,
+                unlocked: JSON.parse(localStorage.getItem('prophet_unlocked')) || [true, ...Array(24).fill(false)],
+                completed: JSON.parse(localStorage.getItem('prophet_completed')) || []
+            };
+
+            // Current session variables
+            let currentLevel = 0;
+            let currentQuestionIndex = 0;
+            let currentQuestions = [];
+            let selectedOption = null;
+            let hintsRemaining = 3;
+            let levelPoints = 0;
+
+            const container = document.getElementById('gameContainer');
+
+            // Save state
+            function saveState() {
+                localStorage.setItem('prophet_name', state.name);
+                localStorage.setItem('prophet_score', state.score);
+                localStorage.setItem('prophet_attempts', state.attempts);
+                localStorage.setItem('prophet_correct', state.correct);
+                localStorage.setItem('prophet_incorrect', state.incorrect);
+                localStorage.setItem('prophet_unlocked', JSON.stringify(state.unlocked));
+                localStorage.setItem('prophet_completed', JSON.stringify(state.completed));
+            }
+
+            // Render helper with fixed header
+            function renderWithHeader(headerContent, mainContent, isScrollable = true) {
+                const scrollClass = isScrollable ? 'scroll-area' : 'no-scroll';
+                container.innerHTML = `
+                    <div class="content-wrapper">
+                        <div class="fixed-header">
+                            ${headerContent}
+                        </div>
+                        <div class="${scrollClass}">
+                            ${mainContent}
+                        </div>
+                    </div>
+                `;
+            }
+
+            // ========== WELCOME SCREEN ==========
+            function renderWelcome() {
+                container.innerHTML = `
+                    <div class="content-wrapper">
+                        <div class="welcome-screen">
+                            <div class="welcome-icon">🌙</div>
+                            <div class="welcome-title">Journey of Light</div>
+                            <p style="opacity:0.8; margin-bottom:20px;">Discover the stories of 25 Prophets</p>
+                            <input type="text" class="welcome-input" id="nameInput" placeholder="Enter your name" value="${state.name}">
+                            <button class="btn btn-primary" id="startBtn">Begin Quest</button>
+                        </div>
+                    </div>
+                `;
+
+                document.getElementById('startBtn').addEventListener('click', () => {
+                    const name = document.getElementById('nameInput').value.trim();
+                    if (!name) {
+                        alert('Please enter your name');
+                        return;
+                    }
+                    state.name = name;
+                    saveState();
+                    renderMainMenu();
+                });
+            }
+
+            // ========== MAIN MENU (Dashboard) ==========
+            function renderMainMenu() {
+                const headerContent = `
+                    <div class="header-row">
+                        <div class="welcome-tag" title="Welcome, ${state.name}">Welcome, ${state.name}</div>
+                        <div class="score-box">⭐ ${state.score}</div>
+                    </div>
+                `;
+
+                const mainContent = `
+                    <div style="margin-bottom:20px;">
+                        <h2 style="font-family:'Playfair Display'; margin-bottom:15px;">Your Progress</h2>
+                        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:15px;">
+                            <div style="background:#efe2c6; padding:12px; border-radius:24px; text-align:center; border:2px solid #be974b;">
+                                <div style="font-size:1.5rem;">📊</div>
+                                <div style="font-size:0.8rem; opacity:0.7;">Attempts</div>
+                                <div style="font-weight:800; font-size:1.5rem;">${state.attempts}</div>
+                            </div>
+                            <div style="background:#efe2c6; padding:12px; border-radius:24px; text-align:center; border:2px solid #be974b;">
+                                <div style="font-size:1.5rem;">✅</div>
+                                <div style="font-size:0.8rem; opacity:0.7;">Correct</div>
+                                <div style="font-weight:800; font-size:1.5rem;">${state.correct}</div>
+                            </div>
+                            <div style="background:#efe2c6; padding:12px; border-radius:24px; text-align:center; border:2px solid #be974b;">
+                                <div style="font-size:1.5rem;">❌</div>
+                                <div style="font-size:0.8rem; opacity:0.7;">Incorrect</div>
+                                <div style="font-weight:800; font-size:1.5rem;">${state.incorrect}</div>
+                            </div>
+                            <div style="background:#efe2c6; padding:12px; border-radius:24px; text-align:center; border:2px solid #be974b;">
+                                <div style="font-size:1.5rem;">🏆</div>
+                                <div style="font-size:0.8rem; opacity:0.7;">Completed</div>
+                                <div style="font-weight:800; font-size:1.5rem;">${state.completed.length}/${prophets.length}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="margin-top:10px;">
+                        ${prophets.map((p, i) => {
+                            const isLocked = !state.unlocked[i];
+                            const isCompleted = state.completed.includes(i);
+                            let statusText = isCompleted ? 'Completed' : (isLocked ? 'Locked' : 'Ready');
+                            let statusEmoji = isCompleted ? '✅' : (isLocked ? '🔒' : '📖');
+                            
+                            return `
+                                <div class="level-card ${isLocked ? 'locked' : ''} ${isCompleted ? 'completed' : ''}" onclick="window.openLevel(${i})">
+                                    <div class="level-number">${i+1}</div>
+                                    <div class="level-info">
+                                        <div class="level-name">${p.name}</div>
+                                        <div class="level-status">${statusText}</div>
+                                    </div>
+                                    <div style="font-size:1.3rem;">${statusEmoji}</div>
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                `;
+
+                renderWithHeader(headerContent, mainContent, true);
+            }
+
+            // ========== STORY PAGE ==========
+            window.openLevel = (levelIndex) => {
+                if (!state.unlocked[levelIndex]) return;
+                
+                currentLevel = levelIndex;
+                const p = prophets[levelIndex];
+                
+                const headerContent = `
+                    <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                        <button class="btn btn-back" onclick="renderMainMenu()">← Back</button>
+                        <div style="background:#846f46; color:white; padding:5px 22px; border-radius:50px; font-weight:600; border:2px solid #e6b864;">Level ${levelIndex+1}</div>
+                    </div>
+                `;
+
+                const mainContent = `
+                    <div class="story-panel">
+                        <div class="prophet-title">${p.name}</div>
+                        <div class="story-text">${p.article}</div>
+                    </div>
+                    <button class="btn btn-primary" onclick="window.startQuiz(${levelIndex})">📝 Start Quiz (5 Questions)</button>
+                `;
+
+                renderWithHeader(headerContent, mainContent, false);
+            };
+
+            // ========== QUIZ PAGE ==========
+            window.startQuiz = (levelIndex) => {
+                currentLevel = levelIndex;
+                currentQuestions = generateQuestionsForLevel(levelIndex);
+                currentQuestionIndex = 0;
+                selectedOption = null;
+                hintsRemaining = 3;
+                levelPoints = 0;
+                renderQuiz();
+            };
+
+            function renderQuiz() {
+                if (currentQuestionIndex >= 5) {
+                    // Level completed
+                    if (!state.completed.includes(currentLevel)) {
+                        state.completed.push(currentLevel);
+                        if (currentLevel + 1 < prophets.length) {
+                            state.unlocked[currentLevel + 1] = true;
+                        }
+                        // Bonus points for completing level
+                        state.score += 100;
+                    }
+                    saveState();
+                    renderLevelComplete();
+                    return;
+                }
+
+                const q = currentQuestions[currentQuestionIndex];
+                
+                const headerContent = `
+                    <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                        <button class="btn btn-back" onclick="window.openLevel(${currentLevel})">← Story</button>
+                        <button class="btn btn-hint" id="hintBtn">💡 Hint (${hintsRemaining})</button>
+                    </div>
+                `;
+
+                const mainContent = `
+                    <div class="quiz-header">
+                        <span class="level-badge">${prophets[currentLevel].name}</span>
+                        <span style="font-weight:600;">Q${currentQuestionIndex + 1}/5</span>
+                    </div>
+                    <div class="question-text">${q.question}</div>
+                    <div class="options-grid" id="optionsContainer">
+                        ${q.options.map((opt, idx) => `
+                            <button class="option-btn" data-opt="${idx}">${opt}</button>
+                        `).join('')}
+                    </div>
+                    <div class="feedback" id="feedbackMsg">Choose your answer</div>
+                    <button class="btn-next ${selectedOption === null ? 'hidden' : ''}" id="nextBtn">→ Next Question</button>
+                `;
+
+                renderWithHeader(headerContent, mainContent, false);
+
+                // Attach option listeners
+                document.querySelectorAll('.option-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        if (selectedOption !== null) return;
+                        const idx = parseInt(btn.dataset.opt);
+                        handleAnswer(idx);
+                    });
+                });
+
+                // Next button listener
+                const nextBtn = document.getElementById('nextBtn');
+                if (nextBtn) {
+                    nextBtn.addEventListener('click', () => {
+                        currentQuestionIndex++;
+                        selectedOption = null;
+                        renderQuiz();
+                    });
+                }
+
+                // Hint button
+                document.getElementById('hintBtn').addEventListener('click', () => {
+                    if (hintsRemaining <= 0) {
+                        alert('No hints left for this level');
+                        return;
+                    }
+                    if (selectedOption !== null) {
+                        alert('You already answered this question');
+                        return;
+                    }
+                    
+                    // Disable one random wrong option
+                    const correct = q.correctIndex;
+                    const options = document.querySelectorAll('.option-btn');
+                    
+                    // Find wrong options that aren't disabled
+                    const wrongIndices = [];
+                    options.forEach((opt, idx) => {
+                        if (idx !== correct && !opt.classList.contains('disabled')) {
+                            wrongIndices.push(idx);
+                        }
+                    });
+                    
+                    if (wrongIndices.length > 0) {
+                        const randomWrong = wrongIndices[Math.floor(Math.random() * wrongIndices.length)];
+                        options[randomWrong].classList.add('disabled');
+                        options[randomWrong].style.opacity = '0.3';
+                        hintsRemaining--;
+                        document.getElementById('hintBtn').innerHTML = `💡 Hint (${hintsRemaining})`;
+                    }
+                });
+            }
+
+            function handleAnswer(choiceIdx) {
+                const q = currentQuestions[currentQuestionIndex];
+                const correct = q.correctIndex;
+                const options = document.querySelectorAll('.option-btn');
+                
+                selectedOption = choiceIdx;
+                state.attempts++;
+                
+                if (choiceIdx === correct) {
+                    options[choiceIdx].classList.add('correct');
+                    state.correct++;
+                    state.score += 50;
+                    levelPoints++;
+                    document.getElementById('feedbackMsg').innerHTML = '✅ MashaAllah! Correct Answer!';
+                } else {
+                    options[choiceIdx].classList.add('wrong');
+                    options[correct].classList.add('correct');
+                    state.incorrect++;
+                    document.getElementById('feedbackMsg').innerHTML = '❌ Not this time. Read the story again.';
+                }
+                
+                // Disable all options
+                options.forEach(opt => {
+                    opt.style.pointerEvents = 'none';
+                });
+                
+                // Show next button
+                document.getElementById('nextBtn').classList.remove('hidden');
+                
+                saveState();
+            }
+
+            function renderLevelComplete() {
+                const pointsMsg = `You got ${levelPoints}/5 correct! +100 bonus`;
+                
+                const headerContent = `
+                    <div class="header-row">
+                        <div class="welcome-tag">${state.name}</div>
+                        <div class="score-box">⭐ ${state.score}</div>
+                    </div>
+                `;
+
+                const mainContent = `
+                    <div class="reward-page">
+                        <div class="reward-icon">🏆</div>
+                        <div class="reward-title">Level Complete!</div>
+                        <div class="points-badge">${pointsMsg}</div>
+                        <button class="btn btn-primary" onclick="renderMainMenu()">🌟 Continue</button>
+                    </div>
+                `;
+
+                renderWithHeader(headerContent, mainContent, false);
+            }
+
+            // ========== INITIAL RENDER ==========
+            if (state.name) {
+                renderMainMenu();
+            } else {
+                renderWelcome();
+            }
+
+            // Make functions global
+            window.renderMainMenu = renderMainMenu;
+            window.openLevel = openLevel;
+            window.startQuiz = startQuiz;
+        })();
+    </script>
+</body>
+</html>
